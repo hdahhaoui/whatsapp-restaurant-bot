@@ -1,0 +1,20 @@
+{
+  "name": "whatsapp-restaurant-bot",
+  "version": "1.0.0",
+  "description": "Chatbot WhatsApp de prise de commande pour restaurant",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5",
+    "sqlite3": "^5.1.6",
+    "axios": "^1.7.2",
+    "ejs": "^3.1.10",
+    "escpos": "^3.0.1",
+    "escpos-usb": "^3.0.0"
+  },
+  "author": "DAHHAOUI",
+  "license": "ISC"
+}
