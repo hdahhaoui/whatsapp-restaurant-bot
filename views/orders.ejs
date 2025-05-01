@@ -1,0 +1,65 @@
+<!-- views/orders.ejs -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Commandes reçues</title>
+  <!-- Inclusion de Bootstrap CSS (CDN) -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="p-4">
+  <div class="container">
+    <h1 class="mb-4">📋 Liste des commandes</h1>
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Détails</th>
+          <th>Statut</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (orders.length === 0) { %>
+          <tr><td colspan="5" class="text-center">Aucune commande pour le moment.</td></tr>
+        <% } %>
+        <% orders.forEach(order => { %>
+          <tr>
+            <td><%= order.id %></td>
+            <td><strong><%= order.customer %></strong><br><small><%= order.phone %></small></td>
+            <td><%= order.items %></td>
+            <td>
+              <% if (order.status === 'pending') { %>
+                <span class="badge badge-warning">En attente</span>
+              <% } else if (order.status === 'ready') { %>
+                <span class="badge badge-success">Prête</span>
+              <% } else if (order.status === 'delivered') { %>
+                <span class="badge badge-secondary">Livrée</span>
+              <% } %>
+            </td>
+            <td>
+              <% if (order.status === 'pending') { %>
+                <!-- Formulaire pour marquer comme prête -->
+                <form action="/status/<%= order.id %>" method="POST" class="d-inline">
+                  <input type="hidden" name="status" value="ready" />
+                  <button type="submit" class="btn btn-sm btn-success">Marquer prête</button>
+                </form>
+              <% } else if (order.status === 'ready') { %>
+                <!-- Formulaire pour marquer comme livrée -->
+                <form action="/status/<%= order.id %>" method="POST" class="d-inline">
+                  <input type="hidden" name="status" value="delivered" />
+                  <button type="submit" class="btn btn-sm btn-primary">Marquer livrée</button>
+                </form>
+              <% } else { %>
+                <!-- Aucun bouton si déjà livrée -->
+                <em>Terminée</em>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
